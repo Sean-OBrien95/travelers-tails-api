@@ -85,7 +85,8 @@ DEBUG = 'DEBUG' in os.environ
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
                 '8000-seanobrien9-travelersta-ej7yx37z1iq.ws-eu110.gitpod.io',
-                'travelers-tails-api.herokuapp.com', 'localhost']
+                'travelers-tails-api.herokuapp.com',
+                'travelers-tails-api-d0dd6ea40a9c.herokuapp.com']
 
 
 # Application definition
