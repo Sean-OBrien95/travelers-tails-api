@@ -83,7 +83,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = 'DEBUG' in os.environ
 # DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), '8000-seanobrien9-travelersta-ej7yx37z1iq.ws-eu110.gitpod.io']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
+                '8000-seanobrien9-travelersta-ej7yx37z1iq.ws-eu110.gitpod.io',
+                'travelers-tails-api.herokuapp.com', 'localhost']
 
 
 # Application definition
