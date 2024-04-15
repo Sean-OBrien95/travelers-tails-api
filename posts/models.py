@@ -227,7 +227,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=100, choices=country_choice)
-    content = models.TextField(blank=True)
+    content = models.TextField(max_length=5000)
     image = models.ImageField(
         upload_to='images/', default='../default_post_rgq6aq', blank=True
     )
