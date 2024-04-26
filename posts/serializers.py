@@ -12,17 +12,9 @@ class PostSerializer(serializers.ModelSerializer):
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
 
-    def validate_image(self, value):
+    def validate_image_or_video(self, value):
         if value.size > 2 * 1024 * 1024:
-            raise serializers.ValidationError('Image size larger than 2MB!')
-        if value.image.height > 4096:
-            raise serializers.ValidationError(
-                'Image height larger than 4096px!'
-            )
-        if value.image.width > 4096:
-            raise serializers.ValidationError(
-                'Image width larger than 4096px!'
-            )
+            raise serializers.ValidationError('File size larger than 2MB!')
         return value
 
     def get_is_owner(self, obj):
@@ -43,6 +35,15 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'location',
             'profile_image', 'created_at', 'updated_at',
-            'title', 'content', 'image', 'image_filter',
+            'title', 'content', 'image', 'video', 'image_filter',
             'like_id', 'likes_count', 'comments_count',
         ]
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def validate(self, data):
+        """
+        Check if either image or video is present.
+        """
+        if not data.get('image') and not data.get('video'):
+            raise serializers.ValidationError("Either image or video is required.")
+        return data
