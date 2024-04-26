@@ -50,6 +50,7 @@ REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
     ]
 
+
 if 'DEV' in os.environ:
     DATABASES = {
         'default': {
@@ -86,7 +87,9 @@ DEBUG = 'DEBUG' in os.environ
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
                 '8000-seanobrien9-travelersta-ej7yx37z1iq.ws-eu110.gitpod.io',
                 'travelers-tails-api.herokuapp.com',
-                'travelers-tails-api-d0dd6ea40a9c.herokuapp.com']
+                'travelers-tails-api-d0dd6ea40a9c.herokuapp.com',
+                '8000-seanobrien9-travelersta-yopsgo2v40m.ws-eu110.gitpod.io',
+                ]
 
 
 # Application definition
@@ -220,3 +223,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-seanobrien9-travelersta-yopsgo2v40m.ws-eu110.gitpod.io',
+]
