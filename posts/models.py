@@ -238,7 +238,8 @@ class Post(models.Model):
     #     blank=True,
     #     null=True,
     #     storage=VideoMediaCloudinaryStorage())
-    video = models.ImageField(upload_to='videos/', blank=True, storage=VideoMediaCloudinaryStorage(),
+    video = models.ImageField(upload_to='videos/', 
+                              blank=True, storage=VideoMediaCloudinaryStorage(),
                               validators=[validate_video])
     image_filter = models.CharField(
         max_length=32, choices=image_filter_choices, default='normal'
