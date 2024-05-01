@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage
+from cloudinary_storage.validators import validate_video
 
 
 class Post(models.Model):
@@ -232,11 +233,13 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_post_rgq6aq', blank=True
     )
-    video = models.FileField(
-        upload_to='videos/',
-        blank=True,
-        null=True,
-        storage=VideoMediaCloudinaryStorage())
+    # video = models.FileField(
+    #     upload_to='videos/',
+    #     blank=True,
+    #     null=True,
+    #     storage=VideoMediaCloudinaryStorage())
+    video = models.ImageField(upload_to='videos/', blank=True, storage=VideoMediaCloudinaryStorage(),
+                              validators=[validate_video])
     image_filter = models.CharField(
         max_length=32, choices=image_filter_choices, default='normal'
     )
