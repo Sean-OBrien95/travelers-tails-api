@@ -233,11 +233,6 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_post_rgq6aq', blank=True
     )
-    # video = models.FileField(
-    #     upload_to='videos/',
-    #     blank=True,
-    #     null=True,
-    #     storage=VideoMediaCloudinaryStorage())
     video = models.FileField(upload_to='videos/', 
                               blank=True, 
                               null=True,

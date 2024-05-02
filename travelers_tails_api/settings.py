@@ -89,6 +89,7 @@ ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
                 'travelers-tails-api.herokuapp.com',
                 'travelers-tails-api-d0dd6ea40a9c.herokuapp.com',
                 '8000-seanobrien9-travelersta-yopsgo2v40m.ws-eu110.gitpod.io',
+                '8000-seanobrien9-travelersta-yopsgo2v40m.ws-eu112.gitpod.io',
                 ]
 
 

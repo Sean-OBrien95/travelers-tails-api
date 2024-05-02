@@ -47,3 +47,18 @@ class PostSerializer(serializers.ModelSerializer):
         if not data.get('image') and not data.get('video'):
             raise serializers.ValidationError("Either image or video is required.")
         return data
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+
+        is_image_uploaded = validated_data.get('image')
+        is_video_uploaded = validated_data.get('video')
+
+        if is_image_uploaded:
+            instance.video = None
+
+        elif is_video_uploaded:
+            instance.image = None
+
+        instance.save()
+        return instance
