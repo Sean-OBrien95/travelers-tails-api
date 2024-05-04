@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Notification
 from .serializers import NotificationSerializer
-
+from .permissions import IsOwnerOrReadOnly
 
 class NotificationList(generics.ListCreateAPIView):
     """
@@ -18,6 +18,6 @@ class NotificationDetail(generics.RetrieveDestroyAPIView):
     """
     Retrieve and delete a specific notification.
     """
-    permission_classes = [IsNotificationOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
