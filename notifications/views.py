@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Notification
 from .serializers import NotificationSerializer
-from .permissions import IsNotificationOwnerOrReadOnly
+
 
 class NotificationList(generics.ListCreateAPIView):
     """
