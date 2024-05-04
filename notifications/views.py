@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Notification
 from .serializers import NotificationSerializer
-from .permissions import IsOwnerOrReadOnly
+from travelers_tails_api.permissions import IsOwnerOrReadOnly
 
 class NotificationList(generics.ListCreateAPIView):
     """
