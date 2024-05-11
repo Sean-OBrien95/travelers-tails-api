@@ -37,8 +37,8 @@ post_save.connect(create_notification_on_like, sender=Like)
 def create_notification_on_follow(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            recipient=instance.followed_user,
-            sender=instance.follower,
+            recipient=instance.followed,
+            sender=instance.owner,
             notification_type='follow',
         )
 
