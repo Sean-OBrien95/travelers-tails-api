@@ -11,7 +11,6 @@ class Notification(models.Model):
     NOTIFICATION_TYPES = (
         ('like', 'Like'),
         ('comment', 'Comment'),
-        ('follow', 'Follow'),
     )
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_received')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_sent')
@@ -34,15 +33,6 @@ def create_notification_on_like(sender, instance, created, **kwargs):
 
 post_save.connect(create_notification_on_like, sender=Like)
 
-def create_notification_on_follow(sender, instance, created, **kwargs):
-    if created:
-        Notification.objects.create(
-            recipient=instance.followed,
-            sender=instance.owner,
-            notification_type='follow',
-        )
-
-post_save.connect(create_notification_on_follow, sender=Follower)
 
 def create_notification_on_comment(sender, instance, created, **kwargs):
     if created:
