@@ -1,18 +1,48 @@
 from rest_framework import generics
-from .models import Conversation, Message
-from .serializers import ConversationSerializer, MessageSerializer
+from django.db.models import Q, Subquery, OuterRef
+from .models import ChatMessage
+from .serializers import MessageSerializer
 
-class ConversationListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Conversation.objects.all()
-    serializer_class = ConversationSerializer
 
-class MessageListCreateAPIView(generics.ListCreateAPIView):
+class CustomInbox(generics.ListAPIView):
+    """
+    Custom view for inbox messages.
+    """
     serializer_class = MessageSerializer
 
     def get_queryset(self):
-        conversation_id = self.kwargs['conversation_id']
-        return Message.objects.filter(conversation_id=conversation_id)
+        user_id = self.kwargs['user_id']
+        messages = ChatMessage.objects.filter(
+            id__in=Subquery(
+                User.objects.filter(
+                    Q(sender__receiver=user_id) | Q(receiver__sender=user_id)
+                ).distinct().annotate(
+                    last_msg=Subquery(
+                        ChatMessage.objects.filter(
+                            Q(sender=OuterRef('id'), receiver=user_id) |
+                            Q(receiver=OuterRef('id'), sender=user_id)
+                        ).order_by('-id')[:1].values_list('id', flat=True)
+                    )
+                ).values_list('last_msg', flat=True).order_by("-id")
+            )
+        ).order_by("-id")
+        return messages
 
-    def perform_create(self, serializer):
-        conversation_id = self.kwargs['conversation_id']
-        serializer.save(sender=self.request.user, conversation_id=conversation_id)
+class CustomGetMessages(generics.ListAPIView):
+    """
+    View for retrieving messages between different users.
+    """
+    serializer_class = MessageSerializer
+    
+    def get_queryset(self):
+        sender_id = self.kwargs['sender_id']
+        receiver_id = self.kwargs['receiver_id']
+        messages = ChatMessage.objects.filter(sender__in=[sender_id, receiver_id], receiver__in=[sender_id, receiver_id])
+        return messages
+
+class CustomSendMessages(generics.CreateAPIView):
+    """
+    View for sending messages.
+    """
+    serializer_class = MessageSerializer
+

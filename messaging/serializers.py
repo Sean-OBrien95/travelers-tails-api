@@ -1,25 +1,23 @@
 from rest_framework import serializers
-from .models import Conversation, Message
+from profiles.serializers import ProfileSerializer
+from .models import ChatMessage
+
 
 class MessageSerializer(serializers.ModelSerializer):
-
-    sender_name = serializers.SerializerMethodField()
-    username = serializers.ReadOnlyField(source='sender.username')
-    profile_image = serializers.ReadOnlyField(source='sender.profile.image.url')
-
-    class Meta:
-        model = Message
-        fields = ['id', 'sender', 'sender_name', 'content', 'timestamp', 'username', 'profile_image']
-
-    def get_sender_name(self, obj):
-        return obj.sender.username
-
-class ConversationSerializer(serializers.ModelSerializer):
-
-    sender_name = serializers.SerializerMethodField()
-    username = serializers.ReadOnlyField(source='sender.username')
-    profile_image = serializers.ReadOnlyField(source='sender.profile.image.url')
+    """
+    Serializer for chat messages with sender and receiver profiles.
+    """
+    receiver_profile = ProfileSerializer(read_only=True)
+    sender_profile = ProfileSerializer(read_only=True)
 
     class Meta:
-        model = Conversation
-        fields = ['id', 'participants', 'sender_name', 'username', 'profile_image']
+        model = ChatMessage
+        fields = ['id', 'sender', 'receiver', 'sender_profile', 'receiver_profile', 'message', 'date_sent']
+    
+    def __init__(self, *args, **kwargs):
+        super(CustomMessageSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'POST':
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 2

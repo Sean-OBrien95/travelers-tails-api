@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import MessageListCreateAPIView, MessageDetailAPIView
+from .views import CustomInbox, CustomGetMessages, CustomSendMessages
 
 urlpatterns = [
-    path('messages/', MessageListCreateAPIView.as_view()),
-    path('messages/<int:pk>/', MessageDetailAPIView.as_view()),
+    path('inbox/<int:user_id>/', CustomInbox.as_view()),
+    path('messages/<int:sender_id>/<int:receiver_id>/', CustomGetMessages.as_view()),
+    path('send/', CustomSendMessages.as_view()),
 ]
