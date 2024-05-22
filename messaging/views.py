@@ -3,7 +3,7 @@ from django.db.models import Q, Subquery, OuterRef
 from django.contrib.auth.models import User
 from .models import ChatMessage
 from .serializers import MessageSerializer
-from .profiles.serializers import ProfileSerializer
+from profiles.serializers import ProfileSerializer
 
 
 class CustomInbox(generics.ListAPIView):
