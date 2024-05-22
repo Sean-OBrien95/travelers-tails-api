@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import ChatMessage
 from .serializers import MessageSerializer
 from travelers_tails_api.serializers import CurrentUserSerializer
+from rest_framework.views import APIView
 
 
 class CustomInbox(generics.ListAPIView):
