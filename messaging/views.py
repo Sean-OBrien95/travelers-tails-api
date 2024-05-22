@@ -5,6 +5,7 @@ from .models import ChatMessage
 from .serializers import MessageSerializer
 from travelers_tails_api.serializers import CurrentUserSerializer
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class CustomInbox(generics.ListAPIView):
