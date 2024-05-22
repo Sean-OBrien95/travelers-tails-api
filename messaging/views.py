@@ -1,5 +1,6 @@
 from rest_framework import generics
 from django.db.models import Q, Subquery, OuterRef
+from django.contrib.auth.models import User
 from .models import ChatMessage
 from .serializers import MessageSerializer
 
