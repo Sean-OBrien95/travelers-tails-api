@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from django.db.models import Q, Subquery, OuterRef
 from django.contrib.auth.models import User
 from .models import ChatMessage
@@ -58,3 +58,4 @@ class UserSearchView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            
