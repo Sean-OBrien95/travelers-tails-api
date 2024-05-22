@@ -3,7 +3,7 @@ from django.db.models import Q, Subquery, OuterRef
 from django.contrib.auth.models import User
 from .models import ChatMessage
 from .serializers import MessageSerializer
-from profiles.serializers import ProfileSerializer
+from travellers_tails_api.serializers import CurrentUserSerializer
 
 
 class CustomInbox(generics.ListAPIView):
@@ -48,10 +48,11 @@ class CustomSendMessages(generics.CreateAPIView):
     """
     serializer_class = MessageSerializer
 
-class UserSearchView(generics.ListAPIView):
-    serializer_class = ProfileSerializer
-
-    def get_queryset(self):
-        username = self.kwargs['username']
-        users = User.objects.filter(username__icontains=username)
-        return users
+class UserSearchView(APIView):
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            serializer = CurrentUserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
