@@ -46,3 +46,12 @@ class CustomSendMessages(generics.CreateAPIView):
     """
     serializer_class = MessageSerializer
 
+class UserSearchView(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        username = self.kwargs['username']
+        users = User.objects.filter(username__icontains=username)
+        if not users.exists():
+            raise NotFound(detail="User does not exist")
+        return users
