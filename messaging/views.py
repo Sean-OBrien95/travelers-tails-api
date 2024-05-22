@@ -3,6 +3,7 @@ from django.db.models import Q, Subquery, OuterRef
 from django.contrib.auth.models import User
 from .models import ChatMessage
 from .serializers import MessageSerializer
+from .profiles.serializers import ProfileSerializer
 
 
 class CustomInbox(generics.ListAPIView):
@@ -48,14 +49,9 @@ class CustomSendMessages(generics.CreateAPIView):
     serializer_class = MessageSerializer
 
 class UserSearchView(generics.ListAPIView):
+    serializer_class = ProfileSerializer
+
     def get_queryset(self):
         username = self.kwargs['username']
         users = User.objects.filter(username__icontains=username)
-        if not users.exists():
-            raise NotFound(detail="User does not exist")
         return users
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = UserSerializer(queryset, many=True)
-        return JsonResponse(serializer.data, safe=False)
