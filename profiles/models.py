@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """
+    Profile model, related to 'owner' which is a User instance.
+    'created_at' and 'updated_at' store the timestamps for profile creation and updates.
+    'name' is a char field, 'content' is a text field, and 'image' is an image field.
+    Default profile image is provided.
+    """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

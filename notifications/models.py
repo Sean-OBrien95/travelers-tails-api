@@ -8,6 +8,12 @@ from comments.models import Comment
 from rest_framework import serializers
 
 class Notification(models.Model):
+    """
+    Notification model, related to 'recipient' and 'sender'.
+    'recipient' and 'sender' are User instances.
+    'notification_type' indicates whether it's a 'like' or 'comment' notification.
+    'post' is a Post instance that can be optionally linked to the notification.
+    """
     NOTIFICATION_TYPES = (
         ('like', 'Like'),
         ('comment', 'Comment'),
@@ -23,6 +29,10 @@ class Notification(models.Model):
 
 
 def create_notification_on_like(sender, instance, created, **kwargs):
+    """
+    Signal handler that creates a notification when a Like is created.
+    The notification is sent to the owner of the liked post.
+    """
     if created:
         Notification.objects.create(
             recipient=instance.post.owner,
@@ -35,6 +45,10 @@ post_save.connect(create_notification_on_like, sender=Like)
 
 
 def create_notification_on_comment(sender, instance, created, **kwargs):
+     """
+    Signal handler that creates a notification when a Comment is created.
+    The notification is sent to the owner of the post that was commented on.
+    """
     if created:
         Notification.objects.create(
             recipient=instance.post.owner,
