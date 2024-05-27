@@ -35,7 +35,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'location',
             'profile_image', 'created_at', 'updated_at',
-            'title', 'content', 'image', 'video', 'image_filter',
+            'title', 'content', 'image', 'video',
             'like_id', 'likes_count', 'comments_count',
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os, sys
 import dj_database_url
 import re
 
@@ -62,6 +62,9 @@ else:
     DATABASES = {
          'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
      }
+
+if 'test' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
@@ -122,8 +125,7 @@ INSTALLED_APPS = [
     'comments',
     'likes',
     'followers',
-    'notifications',
-    'messaging'
+    'notifications'
 ]
 
 SITE_ID = 1
