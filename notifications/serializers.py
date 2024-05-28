@@ -10,6 +10,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='sender.username')
     profile_image = serializers.ReadOnlyField(
          source='sender.profile.image.url')
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Notification

@@ -13,7 +13,8 @@ class NotificationList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Notification.objects.filter(recipient=user)
+        return Notification.objects.filter(recipient=user).order_by(
+            '-created_at')
 
     def perform_create(self, serializer):
         serializer.save(recipient=self.request.user)
