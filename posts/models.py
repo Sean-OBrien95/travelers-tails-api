@@ -156,7 +156,8 @@ class Post(models.Model):
         ('Rwanda', 'Rwanda'),
         ('Saint Kitts and Nevis', 'Saint Kitts and Nevis'),
         ('Saint Lucia', 'Saint Lucia'),
-        ('Saint Vincent and the Grenadines', 'Saint Vincent and the Grenadines'),
+        ('Saint Vincent and the Grenadines',
+         'Saint Vincent and the Grenadines'),
         ('Samoa', 'Samoa'),
         ('San Marino', 'San Marino'),
         ('Sao Tome and Principe', 'Sao Tome and Principe'),
@@ -216,12 +217,11 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_post_rgq6aq', blank=True
     )
-    video = models.FileField(upload_to='videos/', 
-                              blank=True, 
-                              null=True,
-                              storage=VideoMediaCloudinaryStorage(),
-                              validators=[validate_video])
-                              
+    video = models.FileField(upload_to='videos/',
+                             blank=True,
+                             null=True,
+                             storage=VideoMediaCloudinaryStorage(),
+                             validators=[validate_video])
 
     class Meta:
         ordering = ['-created_at']

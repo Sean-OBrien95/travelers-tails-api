@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     """
     Profile model, related to 'owner' which is a User instance.
-    'created_at' and 'updated_at' store the timestamps for profile creation and updates.
-    'name' is a char field, 'content' is a text field, and 'image' is an image field.
+    'created_at'/'updated_at' store the timestamps for profile creation/updates
+    'name' is a char field, 'content' is a text field, 'image' is image field.
     Default profile image is provided.
     """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,5 +29,6 @@ class Profile(models.Model):
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
+
 
 post_save.connect(create_profile, sender=User)

@@ -18,6 +18,7 @@ class NotificationList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(recipient=self.request.user)
 
+
 class NotificationDetail(generics.RetrieveDestroyAPIView):
     """
     Retrieve and delete a specific notification.

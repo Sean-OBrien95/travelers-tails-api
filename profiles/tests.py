@@ -2,11 +2,14 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from profiles.models import Profile
 
+
 class ProfileTestCase(TestCase):
-    
+
     def setUp(self):
-        self.user1 = User.objects.create_user(username='user1', password='password')
-        self.user2 = User.objects.create_user(username='user2', password='password')
+        self.user1 = User.objects.create_user(
+            username='user1', password='password')
+        self.user2 = User.objects.create_user(
+            username='user2', password='password')
 
     def test_profile_creation(self):
         # Check if profiles are created for the users
@@ -20,10 +23,11 @@ class ProfileTestCase(TestCase):
     def test_profile_ordering(self):
         profile1 = Profile.objects.get(owner=self.user1)
         profile2 = Profile.objects.get(owner=self.user2)
-        
-        # Assuming user1 was created before user2, profile1 should come after profile2
+
+        # Assuming user1 was created before user2,
+        # profile1 should come after profile2
         self.assertGreater(profile2.created_at, profile1.created_at)
-        
+
         profiles = list(Profile.objects.all())
         self.assertEqual(profiles[0], profile2)
         self.assertEqual(profiles[1], profile1)
