@@ -87,7 +87,7 @@ Lastly is the create post section, this will give the user 4 fields to fill out 
 Any new post that is made by a registered user will have its information stored here
 * In this page will see a clear layout of all the posts and their various information such as like_count, image, video, and location
 
-<img src="media/images/post_api.png" alt="Photo of the posts pages">
+<img src="media/images/posts_api.png" alt="Photo of the posts pages">
 
 # Comments page
 
